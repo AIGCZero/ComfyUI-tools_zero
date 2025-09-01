@@ -1,0 +1,156 @@
+{
+    "ColorAdjustment": {
+        "title": "实时颜色调整",
+        "inputs": {
+            "image": "图像"
+        },
+        "outputs": {
+            "IMAGE": "图像"
+        }
+    },
+    "ImageCropper": {
+        "title": "可视化图像裁剪",
+        "inputs": {
+            "image": "图像",
+            "mask": "遮罩"
+        },
+        "outputs": {
+            "裁剪图像": "裁剪图像",
+            "裁剪遮罩": "裁剪遮罩"
+        }
+    },
+    "文件导入图像": {
+        "title": "文件导入图像",
+        "widgets": {
+            "folder": "文件夹路径",
+            "width": "宽度",
+            "height": "高度",
+            "keep_aspect_ratio": "保持纵横比",
+            "interpolation": "插值方式",
+            "image_load_cap": "加载图像上限",
+            "start_index": "起始索引",
+            "include_subfolders": "包含子文件夹"
+        },
+        "outputs": {
+            "image": "图像列表",
+            "mask": "遮罩列表",
+            "count": "图像数量",
+            "image_path": "图像路径"
+        }
+    },
+    "文本图像": {
+        "title": "文本图像",
+        "inputs": {
+            "text": "文本",
+            "font_file": "字体文件",
+            "spacing": "字符间距",
+            "leading": "行距",
+            "x_offset": "X轴偏移",
+            "y_offset": "Y轴偏移",
+            "scale": "缩放比例",
+            "variation_range": "变化范围",
+            "variation_seed": "变化种子",
+            "layout": "布局方式",
+            "width": "宽度",
+            "height": "高度",
+            "font_color": "字体颜色",
+            "background_color": "背景颜色",
+            "h_align": "水平对齐",
+            "v_align": "垂直对齐"
+        },
+        "widgets": {
+            "text": "文本",
+            "font_file": "字体文件",
+            "spacing": "字符间距",
+            "leading": "行距",
+            "x_offset": "X轴偏移",
+            "y_offset": "Y轴偏移",
+            "scale": "缩放比例",
+            "variation_range": "变化范围",
+            "variation_seed": "变化种子",
+            "layout": "布局方式",
+            "width": "宽度",
+            "height": "高度",
+            "font_color": "字体颜色",
+            "background_color": "背景颜色",
+            "h_align": "水平对齐",
+            "v_align": "垂直对齐"
+        },
+        "outputs": {
+            "图像": "图像",
+            "遮罩": "遮罩"
+        }
+    },
+    "Batch_text_saving": {
+        "title": "批量文本保存",
+        "inputs": {
+            "text": "文本",
+            "image": "图像"
+        },
+        "widgets": {
+            "text": "文本",
+            "output_file_path": "输出文件路径",
+            "file_name": "文件名",
+            "file_extension": "文件扩展名",
+            "overwrite": "覆盖模式",
+            "name_number": "命名编号",
+            "number_position": "编号位置"
+        },
+        "outputs": {
+            "text": "文本",
+            "image": "图像",
+            "next_number": "下一个编号"
+        }
+    },
+    "Qwen2_prompt": {
+        "title": "Qwen2提示词",
+        "inputs": {},
+        "widgets": {
+            "system_prompt": "系统提示",
+            "user_input": "用户输入",
+            "prompt_type": "提示类型",
+            "model": "模型",
+            "quantization": "量化",
+            "keep_model_loaded": "保持模型加载",
+            "temperature": "温度",
+            "max_new_tokens": "最大生成长度",
+            "output_language": "输出语言",
+            "seed": "随机种子"
+        },
+        "outputs": {
+            "STRING": "文本输出"
+        }
+    },
+    "Qwen2VL_prompt": {
+        "title": "Qwen2VL反推提示词",
+        "inputs": {
+            "image": "图像"
+        },
+        "widgets": {
+            "text": "文本",
+            "prompt_type": "提示类型",
+            "model": "模型",
+            "quantization": "量化",
+            "keep_model_loaded": "保持模型加载",
+            "temperature": "温度",
+            "max_new_tokens": "最大生成长度",
+            "output_language": "输出语言",
+            "video_path": "视频路径"
+        },
+        "outputs": {
+            "STRING": "文本输出"
+        }
+    },
+    "FrameRateCalculator": {
+        "title": "帧率计算器",
+        "widgets": {
+            "duration_seconds": "时长/秒",
+            "frame_rate": "帧率"
+        },
+        "outputs": {
+            "duration_seconds": "时长/秒",
+            "total_frames": "总帧数",
+            "frame_rate": "帧率"
+        }
+    }
+} 

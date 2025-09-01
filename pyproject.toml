@@ -1,0 +1,14 @@
+[project]
+name = "ComfyUI-tools_zero"
+description = "这是一个多功能节点，主要功能有Qwen提示词，显存控制，批量流程节点，This is a multifunctional node, with main functions including Qwen prompt words, video memory control, and batch process nodes"
+version = "1.0.0"
+license = { text = "MIT License" }
+dependencies = ["mlx_lm"]
+
+[project.urls]
+Repository = "https://github.com/AIGCZero/ComfyUI-tools_zero"
+
+[tool.comfy]
+PublisherId = "AIGCzero" 
+DisplayName = "ComfyUI-tools_zero"
+Icon = ""

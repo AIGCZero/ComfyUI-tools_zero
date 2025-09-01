@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZERO提示词模版</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .section-header {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        .section-content.active {
+            display: block;
+        }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .help {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .actions {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+        .template-name-input {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            width: 200px;
+            padding: 0;
+            margin: 0;
+        }
+        .template-name-input:focus {
+            outline: none;
+            background: white;
+            color: #333;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .add-template-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .remove-template-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            float: right;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ZERO提示词模版</h1>
+            <p>通过此界面修改提示词模板，无需编程知识</p>
+            <div id="save-status" class="status info" style="display: none; margin-top: 10px; background: rgba(255,255,255,0.2); color: white;"></div>
+        </div>
+        
+        <div class="content">
+            <div class="help">
+                <strong>占位符说明：</strong> {user_input} - 用户输入内容
+            </div>
+            
+            <button class="add-template-btn" onclick="addNewTemplate()">+ 添加新模板</button>
+            
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('ecommerce')">
+                    <span><input type="text" id="ecommerce-name" value="电商扩写模板" class="template-name-input" onclick="event.stopPropagation()"></span>
+                    <span>▼</span>
+                </div>
+                <div class="section-content" id="ecommerce">
+                    <button class="remove-template-btn" onclick="removeTemplate(this)">删除模板</button>
+                    <textarea id="ecommerce-template">请基于以下输入内容进行创意扩展："{user_input}"。
+要求：1. 保留原文核心信息，进行有针对性的扩展；
+2. 不要做任何不必要的输出，只输出扩写的提示词部分；
+3. 扩展内容要符合逻辑，与原文风格一致；
+4. 必须包含以下要素：
+   - 主体描述：详细描述主体电商产品的细节
+   - 环境背景：电商产品场景设置尽量简洁、色彩对比明显、氛围营造
+   - 文字描写：需要写入电商宣传图的文字如：图像上方是产品名称，下方是英文的宣传用语
+   - 光影效果：光源方向、阴影、光质、色彩
+   - 构图视角：拍摄角度、景别、透视关系
+   - 艺术风格：电商产品整体风格、色彩搭配、质感表现
+   - 质量提升：分辨率、细节、专业摄影术语
+5. 保留原文核心信息的情况下，可以适当调整句式，增加描述性和生动性。</textarea>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('creative')">
+                    <span><input type="text" id="creative-name" value="创意扩写模板" class="template-name-input" onclick="event.stopPropagation()"></span>
+                    <span>▼</span>
+                </div>
+                <div class="section-content" id="creative">
+                    <button class="remove-template-btn" onclick="removeTemplate(this)">删除模板</button>
+                    <textarea id="creative-template">请基于以下输入内容进行创意扩展和艺术化处理："{user_input}"。
+要求：1. 在保留原文核心信息的基础上，增加创意元素和艺术感；
+2. 不要做任何不必要的输出，只输出扩写的提示词部分，输出提示词控制在200字以内；
+3. 扩展内容要富有想象力和艺术性，可以添加比喻、象征等修辞手法；
+4. 必须包含以下要素：
+   - 主体描述：详细描述主体特征、表情、姿态等
+   - 环境背景：场景设置、空间感、氛围营造
+   - 光影效果：光源方向、阴影、光质、色彩
+   - 构图视角：拍摄角度、景别、透视关系
+   - 艺术风格：整体风格、色彩搭配、质感表现
+   - 质量提升：分辨率、细节、专业摄影术语
+5. 使用丰富的形容词和专业的摄影/艺术术语，让描述更加生动和专业。</textarea>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-header" onclick="toggleSection('detailed')">
+                    <span><input type="text" id="detailed-name" value="详细扩写模板" class="template-name-input" onclick="event.stopPropagation()"></span>
+                    <span>▼</span>
+                </div>
+                <div class="section-content" id="detailed">
+                    <button class="remove-template-btn" onclick="removeTemplate(this)">删除模板</button>
+                    <textarea id="detailed-template">请基于以下输入内容进行详细扩展和精细化描述："{user_input}"。
+要求：1. 保留原文核心信息，进行深度扩展和细节补充；
+2. 不要做任何不必要的输出，只输出扩写的提示词部分；
+3. 扩展内容要注重细节，提供丰富的视觉信息；
+4. 必须详细描述以下方面：
+   - 主体细节：外貌特征、服装细节、配饰、表情、动作
+   - 场景环境：空间布局、物体摆放、材质质感、色彩搭配
+   - 光影氛围：主光源、辅助光、阴影分布、光质效果
+   - 构图技巧：拍摄角度、景深控制、画面平衡、视觉重点
+   - 技术参数：相机设置、镜头选择、后期处理效果
+   - 风格特色：艺术风格、时代特征、文化元素
+5. 使用精确的术语和具体的描述，让画面更加清晰和具体。</textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="resetToDefault()">重置默认</button>
+            <button class="btn btn-primary" onclick="saveConfig(true)">保存配置</button>
+            <button class="btn btn-success" onclick="exportConfig()">导出Python</button>
+            <div class="status" id="status"></div>
+        </div>
+    </div>
+
+    <script>
+        // 从localStorage加载配置
+        function loadSavedConfig() {
+            const savedConfig = localStorage.getItem('promptConfig');
+            if (savedConfig) {
+                const config = JSON.parse(savedConfig);
+                
+                // 先恢复默认的3个模板
+                applyConfig(config);
+                
+                // 然后添加保存的新模板（只添加存在的模板）
+                Object.keys(config).forEach(templateId => {
+                    if (templateId.startsWith('template-') && !document.getElementById(templateId)) {
+                        // 这是一个新添加的模板，需要重新创建
+                        const templateData = config[templateId];
+                        if (templateData && templateData.name && templateData.template) {
+                            createNewTemplate(templateId, templateData.name, templateData.template);
+                        }
+                    }
+                });
+            }
+        }
+        
+        // 创建新模板的函数
+        function createNewTemplate(templateId, templateName, templateContent) {
+            const newSection = document.createElement('div');
+            newSection.className = 'section';
+            newSection.innerHTML = `
+                <div class="section-header" onclick="toggleSection('${templateId}')">
+                    <span><input type="text" id="${templateId}-name" value="${templateName}" class="template-name-input" onclick="event.stopPropagation()"></span>
+                    <span>▼</span>
+                </div>
+                <div class="section-content" id="${templateId}">
+                    <button class="remove-template-btn" onclick="removeTemplate(this)">删除模板</button>
+                    <textarea id="${templateId}-template">${templateContent}</textarea>
+                </div>
+            `;
+            
+            const content = document.querySelector('.content');
+            const addButton = document.querySelector('.add-template-btn');
+            content.insertBefore(newSection, addButton.nextSibling);
+            
+            // 自动展开新模板
+            document.getElementById(templateId).classList.add('active');
+        }
+        
+        // 应用配置到页面
+        function applyConfig(config) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                const nameInput = section.querySelector('.template-name-input');
+                const templateTextarea = section.querySelector('textarea');
+                if (nameInput && templateTextarea) {
+                    const templateId = templateTextarea.id.replace('-template', '');
+                    if (config[templateId]) {
+                        nameInput.value = config[templateId].name;
+                        templateTextarea.value = config[templateId].template;
+                    }
+                }
+            });
+        }
+        
+        // 获取原始模板ID
+        function getOriginalTemplateId(index) {
+            const ids = ['ecommerce', 'creative', 'detailed'];
+            return ids[index] || `template-${index}`;
+        }
+        
+        function toggleSection(id) {
+            const content = document.getElementById(id);
+            content.classList.toggle('active');
+        }
+        
+        function showStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            setTimeout(() => status.style.display = 'none', 3000);
+        }
+        
+        function saveConfig(downloadFile = false) {
+            const config = {};
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach((section, index) => {
+                const nameInput = section.querySelector('.template-name-input');
+                const templateTextarea = section.querySelector('textarea');
+                if (nameInput && templateTextarea) {
+                    // 使用模板ID作为key，确保新添加的模板也能被保存
+                    const templateId = templateTextarea.id.replace('-template', '');
+                    config[templateId] = {
+                        name: nameInput.value,
+                        template: templateTextarea.value
+                    };
+                }
+            });
+            
+            // 保存到localStorage
+            localStorage.setItem('promptConfig', JSON.stringify(config));
+            
+            // 显示保存状态
+            if (!downloadFile) {
+                showSaveStatus('配置已自动保存');
+            } else {
+                showStatus('配置已保存到本地存储');
+            }
+        }
+        
+        function showSaveStatus(message) {
+            const saveStatus = document.getElementById('save-status');
+            saveStatus.textContent = message;
+            saveStatus.style.display = 'block';
+            setTimeout(() => {
+                saveStatus.style.display = 'none';
+            }, 2000);
+        }
+        
+        function exportConfig() {
+            const config = {};
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                const nameInput = section.querySelector('.template-name-input');
+                const templateTextarea = section.querySelector('textarea');
+                if (nameInput && templateTextarea) {
+                    let templateContent = templateTextarea.value;
+                    // 自动添加{language_suffix}，如果还没有的话
+                    if (!templateContent.includes('{language_suffix}')) {
+                        templateContent += '{language_suffix}';
+                    }
+                    config[nameInput.value] = templateContent;
+                }
+            });
+            
+            let pythonCode = `# Qwen提示词模板配置
+prompt_map = {
+`;
+            
+            for (const [key, value] of Object.entries(config)) {
+                const formattedValue = value.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+                pythonCode += `    "${key}": (\n        "${formattedValue}"\n    ),\n\n`;
+            }
+            
+            pythonCode += `}
+
+prompt_type = list(prompt_map.keys())
+
+def get_prompt_config():
+    return {
+        "prompt_type": prompt_type,
+        "prompt_map": prompt_map
+    }
+
+if __name__ == "__main__":
+    config = get_prompt_config()
+    print("Qwen提示词模板配置:")
+    print(f"可用类型: {config['prompt_type']}")
+`;
+            
+            const blob = new Blob([pythonCode], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'qwen_prompt.py';
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showStatus('Python配置文件已导出（已自动添加{language_suffix}）');
+        }
+        
+        function resetToDefault() {
+            if (confirm('确定要重置为默认配置吗？这将清除所有保存的配置。')) {
+                // 清除localStorage
+                localStorage.removeItem('promptConfig');
+                // 重新加载页面
+                location.reload();
+            }
+        }
+        
+        function addNewTemplate() {
+            const templateId = 'template-' + Date.now();
+            const templateName = '新模板' + (document.querySelectorAll('.section').length + 1);
+            const defaultContent = `请基于以下输入内容进行扩展："{user_input}"。
+要求：1. 保留原文核心信息，进行有针对性的扩展；
+2. 不要做任何不必要的输出，只输出扩写的提示词部分；
+3. 扩展内容要符合逻辑，与原文风格一致；
+4. 必须包含以下要素：
+   - 主体描述：详细描述主体特征
+   - 环境背景：场景设置、氛围营造
+   - 光影效果：光源方向、阴影、光质、色彩
+   - 构图视角：拍摄角度、景别、透视关系
+   - 艺术风格：整体风格、色彩搭配、质感表现
+   - 质量提升：分辨率、细节、专业摄影术语
+5. 使用丰富的形容词和专业的摄影/艺术术语，让描述更加生动和专业。`;
+            
+            createNewTemplate(templateId, templateName, defaultContent);
+            
+            // 自动保存新添加的模板
+            setTimeout(() => {
+                saveConfig(false);
+            }, 100);
+        }
+        
+        function removeTemplate(button) {
+            if (confirm('确定要删除这个模板吗？')) {
+                const section = button.closest('.section');
+                const templateTextarea = section.querySelector('textarea');
+                
+                if (templateTextarea) {
+                    // 从localStorage中删除对应的模板配置
+                    const templateId = templateTextarea.id.replace('-template', '');
+                    const savedConfig = localStorage.getItem('promptConfig');
+                    if (savedConfig) {
+                        const config = JSON.parse(savedConfig);
+                        delete config[templateId];
+                        localStorage.setItem('promptConfig', JSON.stringify(config));
+                    }
+                }
+                
+                // 从页面中移除模板
+                section.remove();
+                
+                // 显示删除成功提示
+                showSaveStatus('模板已删除');
+            }
+        }
+        
+        // 页面加载时加载保存的配置并展开第一个部分
+        window.onload = function() {
+            loadSavedConfig();
+            document.getElementById('ecommerce').classList.add('active');
+            
+            // 添加自动保存功能
+            addAutoSaveListeners();
+        };
+        
+        // 添加自动保存监听器
+        function addAutoSaveListeners() {
+            // 监听模板名称输入框的变化
+            document.addEventListener('input', function(e) {
+                if (e.target.classList.contains('template-name-input')) {
+                    setTimeout(() => {
+                        saveConfig(false);
+                    }, 500); // 延迟500ms保存，避免频繁保存
+                }
+            });
+            
+            // 监听模板内容的变化
+            document.addEventListener('input', function(e) {
+                if (e.target.tagName === 'TEXTAREA' && e.target.id.includes('-template')) {
+                    setTimeout(() => {
+                        saveConfig(false);
+                    }, 1000); // 延迟1秒保存，避免频繁保存
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
